@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=77"]  # 77+ entende a licença SPDX (PEP 639)
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enslaved"
+version = "0.2.0"
+description = "Enslaved - plataforma pessoal de IA local (Fase 2A: skills e ferramentas)"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.30",
+    "httpx>=0.28",
+    "pydantic>=2.9",
+    "PyYAML>=6.0.2",
+    "pypdf>=5.0",
+    "defusedxml>=0.7.1",
+    "Pillow>=10.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3", "playwright>=1.45"]
+
+[tool.setuptools.packages.find]
+include = ["backend*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

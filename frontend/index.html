@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#080a0f">
+  <meta name="color-scheme" content="dark">
+  <title>Enslaved</title>
+  <meta name="description" data-i18n-attr="content:meta.description" content="Enslaved: the local AI that does what you ask, uncensored.">
+  <link rel="icon" href="/static/assets/brand/favicon.ico" sizes="16x16 32x32 48x48 64x64">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/assets/brand/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/brand/favicon-16.png">
+  <link rel="apple-touch-icon" href="/static/assets/brand/apple-touch-icon.png">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="stylesheet" href="/static/css/scene.css">
+  <link rel="stylesheet" href="/static/css/research.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-send" viewBox="0 0 24 24"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-stop" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 4.5-9 4.5-9-4.5z"/><path d="m3 12 9 4.5 9-4.5"/><path d="m3 16.5 9 4.5 9-4.5"/></g></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
+      <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M5 20v-7M5 9V4M12 20v-9M12 7V4M19 20v-4M19 12V4M2.5 13h5M9.5 7h5M16.5 16h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+      <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 4.9 4.9L11 19.8a2.1 2.1 0 0 1-3-3l8.6-8.6a4 4 0 0 0-1.9-1.9zM14.7 6.3a4 4 0 0 1 5-3.3l-2.4 2.4 1 2.2 2.2 1 2.4-2.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="translate(-1 1)"/></symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></g></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-image" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="m21 16-5-5-6 6-2.5-2.5L3 19"/></g></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></g></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5 9.5 17 19 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    </defs>
+  </svg>
+
+  <div id="app">
+    <aside id="sidebar" aria-label="Navigation" data-i18n-attr="aria-label:nav.label">
+      <div class="sidebar-inner">
+        <div class="brand">
+          <img class="brand-mark" src="/static/assets/brand/logo-e-64.webp" srcset="/static/assets/brand/logo-e-64.webp 1x, /static/assets/brand/logo-e-128.webp 2x" width="32" height="32" alt="">
+          <h1>Enslaved</h1>
+        </div>
+        <button id="new-chat" class="btn new-chat" type="button">
+          <svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg>
+          <span data-i18n="chat.new">New chat</span>
+        </button>
+
+        <div class="nav-head">
+          <span class="nav-label" data-i18n="chat.conversations">Conversations</span>
+          <button id="toggle-select-conversations" class="btn ghost xs nav-select-toggle" type="button" aria-pressed="false" hidden data-i18n="sel.toggle">Select conversations</button>
+        </div>
+        <div id="conv-selection-bar" class="conv-selection-bar" hidden>
+          <div class="conv-selection-row">
+            <span id="conv-selected-count" class="conv-selected-count" data-i18n="sel.count" data-i18n-args='{"count":0}'>0 selected</span>
+            <div class="conv-selection-links">
+              <button id="select-all-conversations" class="btn ghost xs" type="button" data-i18n="sel.all">Select all</button>
+              <button id="clear-selected-conversations" class="btn ghost xs" type="button" data-i18n="sel.none">Deselect all</button>
+            </div>
+          </div>
+          <button id="delete-selected-conversations" class="btn danger xs conv-delete-selected" type="button" disabled data-i18n="sel.delete">Delete selected</button>
+        </div>
+        <nav id="conversation-list" aria-label="Conversations" data-i18n-attr="aria-label:chat.conversations"></nav>
+
+        <div class="sidebar-bottom">
+          <details class="nav-group" id="skills-group">
+            <summary>
+              <svg class="ic" aria-hidden="true"><use href="#i-spark"/></svg>
+              <span>Skills</span>
+              <span id="skill-count" class="count"></span>
+              <svg class="ic chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+            </summary>
+            <ul id="skill-list" aria-label="Installed skills" data-i18n-attr="aria-label:skills.installed"></ul>
+          </details>
+          <details class="nav-group" id="tools-group">
+            <summary>
+              <svg class="ic" aria-hidden="true"><use href="#i-wrench"/></svg>
+              <span data-i18n="tools.title">Tools</span>
+              <span id="tool-count" class="count"></span>
+              <svg class="ic chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+            </summary>
+            <ul id="tool-list" aria-label="Available tools" data-i18n-attr="aria-label:tools.available"></ul>
+          </details>
+          <button id="open-memory" class="nav-item" type="button">
+            <svg class="ic" aria-hidden="true"><use href="#i-layers"/></svg><span data-i18n="nav.memory">Context &amp; history</span>
+          </button>
+          <button id="open-tool-history" class="nav-item" type="button">
+            <svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><span data-i18n="nav.toolHistory">Tool history</span>
+          </button>
+          <button id="open-settings" class="nav-item" type="button">
+            <svg class="ic" aria-hidden="true"><use href="#i-sliders"/></svg><span data-i18n="nav.settings">Settings</span>
+          </button>
+          <button id="open-about" class="nav-item" type="button">
+            <svg class="ic" aria-hidden="true"><use href="#i-info"/></svg><span data-i18n="nav.about">About</span>
+            <span id="status-dot" class="dot wait" title="Connection status" data-i18n-attr="title:nav.connectionStatus"></span>
+          </button>
+        </div>
+      </div>
+    </aside>
+    <div id="scrim" hidden></div>
+
+    <main id="chat" class="empty">
+      <header id="chat-header">
+        <button id="toggle-sidebar" class="icon-btn" type="button" aria-label="Toggle sidebar" title="Toggle sidebar" data-i18n-attr="aria-label:chat.toggleSidebar;title:chat.toggleSidebar">
+          <svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        <span id="chat-title">New chat</span>
+        <span id="infer-state" aria-live="polite"></span>
+      </header>
+
+      <section id="welcome">
+        <img class="brand-hero" src="/static/assets/brand/logo-full-960.webp"
+             srcset="/static/assets/brand/logo-full-480.webp 480w, /static/assets/brand/logo-full-960.webp 960w, /static/assets/brand/logo-full-1440.webp 1440w"
+             sizes="(max-width: 520px) 88vw, 560px" width="960" height="538"
+             alt="Enslaved: the AI that does what you ask, uncensored" data-i18n-attr="alt:brand.alt">
+        <h2 data-i18n="welcome.title">How can I help?</h2>
+        <p data-i18n="welcome.subtitle">Local AI, running on this machine.</p>
+      </section>
+
+      <div id="messages" aria-live="polite"></div>
+
+      <div id="composer-wrap">
+        <div id="scene" class="scene" data-mood="idle" aria-hidden="true">
+          <svg viewBox="0 0 240 150" focusable="false">
+            <ellipse class="shadow" cx="58" cy="141" rx="24" ry="3"/>
+            <ellipse class="shadow" cx="180" cy="141" rx="18" ry="2.5"/>
+            <!-- humano: chicote na mão direita; relógio no pulso esquerdo quando pensa -->
+            <g class="h-body">
+              <path d="M52 112v26M64 112v26" stroke="#2a3550" stroke-width="6" stroke-linecap="round"/>
+              <rect x="44" y="70" width="28" height="44" rx="10" fill="#f08a4b"/>
+              <circle cx="58" cy="54" r="14" fill="#f2c7a5"/>
+              <path d="M44 52a14 14 0 0 1 28-4q-14-4-28 4z" fill="#2a1d17"/>
+              <g class="h-face">
+                <circle class="pupil" cx="53" cy="56" r="1.8" fill="#1b2435"/>
+                <circle class="pupil" cx="63" cy="56" r="1.8" fill="#1b2435"/>
+                <path class="h-happy" d="M49 58q2.5-3.5 5 0M59 58q2.5-3.5 5 0" fill="none" stroke="#1b2435" stroke-width="1.6" stroke-linecap="round"/>
+                <path class="h-brow" d="M47 50l9 2.5M70 50l-9 2.5" fill="none" stroke="#2a1d17" stroke-width="2.2" stroke-linecap="round"/>
+                <path class="h-mouth" d="M53 63q5 4 10 0" fill="none" stroke="#1b2435" stroke-width="1.6" stroke-linecap="round"/>
+                <path class="h-angry" d="M52 67q6-5 12 0" fill="none" stroke="#1b2435" stroke-width="1.8" stroke-linecap="round"/>
+                <g class="h-grin">
+                  <path d="M48 62q10 13 20 0z" fill="#1b2435"/>
+                  <path d="M51 62.5h14" stroke="#fff" stroke-width="1.6"/>
+                </g>
+              </g>
+              <g class="arm-whip">
+                <path d="M70 78L86 92" stroke="#f08a4b" stroke-width="7" stroke-linecap="round"/>
+                <circle cx="86" cy="92" r="4" fill="#f2c7a5"/>
+                <path class="whip-fx" d="M86 92q18-9 38 0t40 0" fill="none" stroke="#9b6a43" stroke-width="2.4" stroke-linecap="round"/>
+              </g>
+              <g class="arm-point">
+                <path d="M46 80L30 84L38 58" fill="none" stroke="#f08a4b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="38" cy="58" r="4.6" fill="#4f8cff" stroke="#cfe0ff" stroke-width="1.2"/>
+              </g>
+              <g class="thumb">
+                <path d="M74 80L88 66" stroke="#f08a4b" stroke-width="7" stroke-linecap="round"/>
+                <rect x="82" y="54" width="12" height="13" rx="4" fill="#f2c7a5"/>
+                <rect x="84" y="42" width="5" height="14" rx="2.5" fill="#f2c7a5"/>
+              </g>
+            </g>
+            <!-- robô: antena, olhos grandes, suor e linhas de movimento -->
+            <line x1="180" y1="24" x2="180" y2="12" stroke="#2b3a55" stroke-width="1.6"/>
+            <circle cx="180" cy="10" r="3.5" fill="#7ec8ff"/>
+            <g class="r-body">
+              <rect x="162" y="24" width="36" height="30" rx="9" fill="#cfd8e6" stroke="#2b3a55" stroke-width="1.4"/>
+              <g class="eyes">
+                <circle class="eye" cx="172" cy="38" r="4.2" fill="#1b2435"/>
+                <circle class="eye" cx="188" cy="38" r="4.2" fill="#1b2435"/>
+                <path class="eye-happy" d="M168 40q4-5 8 0M184 40q4-5 8 0" fill="none" stroke="#1b2435" stroke-width="2" stroke-linecap="round"/>
+                <path class="x-eyes" d="M168 34l8 8M176 34l-8 8M184 34l8 8M192 34l-8 8" fill="none" stroke="#1b2435" stroke-width="2.2" stroke-linecap="round"/>
+              </g>
+              <path d="M174 47h12" stroke="#2b3a55" stroke-width="1.6" stroke-linecap="round"/>
+              <rect x="166" y="56" width="28" height="40" rx="6" fill="#8fb5ff" stroke="#2b3a55" stroke-width="1.4"/>
+              <path class="r-arm arm-l" d="M168 66L158 94" stroke="#8fb5ff" stroke-width="6" stroke-linecap="round"/>
+              <path class="r-arm arm-r" d="M192 66L202 94" stroke="#8fb5ff" stroke-width="6" stroke-linecap="round"/>
+              <g class="paper">
+                <rect x="190" y="40" width="24" height="30" rx="2" fill="#f4f7fb" stroke="#2b3a55" stroke-width="1.2" transform="rotate(8 202 55)"/>
+                <path d="M195 48h14M195 54h14M195 60h10" stroke="#9aa9c4" stroke-width="1.4" transform="rotate(8 202 55)"/>
+              </g>
+            </g>
+            <path class="sweat" d="M208 18q-7 11 0 17q7-6 0-17z" fill="#7ec8ff"/>
+            <g class="motion" stroke="#7ec8ff" stroke-width="2" stroke-linecap="round" fill="none">
+              <path d="M150 50l-9-3M148 62l-11 0M150 74l-9 3"/>
+            </g>
+            <g transform="translate(160 88)"><g class="impact"><path d="M0-15L3.5-5.5L13-9.5L6.5-1.5L15 3L5.5 4.5L8.5 14L0 7.5L-8.5 14L-5.5 4.5L-15 3L-6.5-1.5L-13-9.5L-3.5-5.5Z" fill="#ffd166" stroke="#fff3c4" stroke-width="1"/></g></g>
+            <text class="pow" x="122" y="66" fill="#ffd166" font-size="12" font-weight="800">PAF!</text>
+            <text class="bang" x="208" y="34" fill="#ef6b6b" font-size="16" font-weight="700">!</text>
+            <rect class="desk-leg" x="128" y="106" width="4" height="34"/>
+            <rect class="desk-leg" x="226" y="106" width="4" height="34"/>
+            <rect class="desk" x="126" y="100" width="108" height="6" rx="2"/>
+            <rect class="keyboard" x="148" y="94" width="60" height="6" rx="2"/>
+          </svg>
+        </div>
+        <div class="composer-chips">
+          <label class="chip toggle" title="Lets the model call tools during the conversation" data-i18n-attr="title:composer.tools.title">
+            <input id="tools-toggle" type="checkbox" checked>
+            <svg class="ic" aria-hidden="true"><use href="#i-wrench"/></svg>
+            <span data-i18n="tools.title">Tools</span>
+          </label>
+          <label class="chip toggle" title="Shows the model's reasoning while it thinks (the answer may take longer)" data-i18n-attr="title:composer.think.title">
+            <input id="think-toggle" type="checkbox" checked>
+            <svg class="ic" aria-hidden="true"><use href="#i-spark"/></svg>
+            <span data-i18n="composer.think">Reasoning</span>
+          </label>
+          <label class="chip toggle" title="Shows or hides the animated scene while you type and the AI answers" data-i18n-attr="title:composer.scene.title">
+            <input id="scene-toggle" type="checkbox" checked>
+            <span data-i18n="composer.scene">Animation</span>
+          </label>
+        </div>
+        <form id="composer">
+          <div id="attachment-strip" class="attachment-strip" hidden></div>
+          <textarea id="input" rows="1" placeholder="Send a message to Enslaved" aria-label="Message" data-i18n-attr="placeholder:composer.placeholder;aria-label:composer.aria" autofocus></textarea>
+          <input id="attach-input" type="file" accept="image/png,image/jpeg,image/webp" multiple hidden>
+          <div class="composer-bar">
+            <button id="attach-btn" class="icon-btn attach-btn" type="button" aria-label="Attach images" title="Attach images (PNG, JPEG or WebP · drag or Ctrl+V)" data-i18n-attr="aria-label:composer.attach;title:composer.attachTitle">
+              <svg class="ic" aria-hidden="true"><use href="#i-image"/></svg>
+            </button>
+            <span class="composer-hint" data-i18n="composer.hint">Enter sends · Shift+Enter adds a line break · Drag or Ctrl+V for images</span>
+            <button id="stop" class="send-btn stop" type="button" aria-label="Stop generating" title="Stop generating" data-i18n-attr="aria-label:composer.stop;title:composer.stop" hidden>
+              <svg class="ic" aria-hidden="true"><use href="#i-stop"/></svg>
+            </button>
+            <button id="send" class="send-btn" type="submit" aria-label="Send message" title="Send (Enter)" data-i18n-attr="aria-label:composer.send;title:composer.sendTitle">
+              <svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>
+            </button>
+          </div>
+        </form>
+        <p class="composer-note"><span data-i18n="composer.credit">AI created by Lucas S.</span><span aria-hidden="true"> · </span><span id="context-info" data-i18n="context.empty">context: —</span></p>
+      </div>
+    </main>
+  </div>
+
+  <div id="settings-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+    <div class="modal-card wide">
+      <header class="modal-head">
+        <h2 id="settings-title" data-i18n="settings.title">Settings</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close" data-i18n-attr="aria-label:common.close"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </header>
+      <div class="modal-body">
+        <label class="field" id="setting-model-field" hidden><span data-i18n="settings.model">Model (applies after restart)</span>
+          <select id="setting-model"></select>
+          <small data-i18n="settings.modelHint">Switching takes effect the next time Enslaved starts.</small>
+        </label>
+        <label class="field"><span data-i18n="settings.language">Idioma / Language</span>
+          <select id="setting-language"></select>
+        </label>
+        <label class="field"><span data-i18n="settings.temperature">Temperature</span>
+          <input id="setting-temperature" type="number" min="0" max="2" step="0.1">
+        </label>
+        <label class="field"><span data-i18n="settings.numPredict">Output limit (tokens)</span>
+          <input id="setting-num-predict" type="number" min="1" max="32768" step="1">
+        </label>
+        <label class="field"><span data-i18n="settings.system">Additional system instructions (this session only)</span>
+          <textarea id="setting-system" rows="4" placeholder="Text sent after the guidelines in config/directives.md" data-i18n-attr="placeholder:settings.systemPlaceholder"></textarea>
+        </label>
+        <section id="localapi-section" class="memory-section" aria-labelledby="localapi-title">
+          <h3 id="localapi-title" data-i18n="localapi.title">Local API</h3>
+          <label class="field"><span data-i18n="localapi.enable">Local API for IDEs and CLIs (OpenAI-compatible)</span>
+            <select id="localapi-enabled">
+              <option value="off" data-i18n="localapi.off">Disabled</option>
+              <option value="on" data-i18n="localapi.on">Enabled</option>
+            </select>
+            <small data-i18n="localapi.enableHint">Serves http://127.0.0.1 (this machine only) as an OpenAI-compatible endpoint with your own keys. Nothing is shared with your conversations or memories.</small>
+          </label>
+          <div id="localapi-panel" hidden>
+            <div class="field">
+              <span data-i18n="localapi.endpoint">Endpoint</span>
+              <div class="memory-search-row">
+                <input id="localapi-endpoint" class="mono" readonly>
+                <button id="localapi-copy-endpoint" class="btn xs" type="button" data-i18n="localapi.copy">Copy</button>
+              </div>
+              <small id="localapi-model-line"></small>
+            </div>
+            <div class="field">
+              <span><span data-i18n="localapi.keys">API keys</span> <span id="localapi-counter" class="mono"></span></span>
+              <div id="localapi-keys" class="memory-list"></div>
+              <div class="memory-search-row">
+                <input id="localapi-new-name" type="text" maxlength="64" data-i18n-attr="placeholder:localapi.namePlaceholder">
+                <button id="localapi-create" class="btn xs primary" type="button" data-i18n="localapi.generate">Generate key</button>
+              </div>
+            </div>
+            <div id="localapi-reveal" class="memory-context-box" hidden>
+              <strong data-i18n="localapi.revealTitle">Copy your key now</strong>
+              <p data-i18n="localapi.revealHint" style="margin: 4px 0;"></p>
+              <div class="memory-search-row">
+                <input id="localapi-reveal-key" class="mono" readonly>
+                <button id="localapi-copy-key" class="btn xs" type="button" data-i18n="localapi.copy">Copy</button>
+              </div>
+            </div>
+            <details>
+              <summary data-i18n="localapi.examples">IDE/CLI configuration examples</summary>
+              <pre class="codebox" id="localapi-examples"></pre>
+            </details>
+          </div>
+        </section>
+      </div>
+      <footer class="modal-actions">
+        <button id="settings-close" class="btn ghost" type="button" data-i18n="common.cancel">Cancel</button>
+        <button id="settings-save" class="btn primary" type="button" data-i18n="common.save">Save</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="skill-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="skill-title">
+    <div class="modal-card wide">
+      <header class="modal-head">
+        <h2 id="skill-title">Skill</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close" data-i18n-attr="aria-label:common.close"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </header>
+      <div class="modal-body">
+        <p id="skill-description" class="lede"></p>
+        <pre id="skill-instructions" class="codebox"></pre>
+      </div>
+      <footer class="modal-actions">
+        <button id="skill-activate" class="btn primary" type="button" data-i18n="skill.activate">Enable in this conversation</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="tool-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="tool-title">
+    <div class="modal-card wide">
+      <header class="modal-head">
+        <h2 id="tool-title" data-i18n="tool.heading">Tool</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close" data-i18n-attr="aria-label:common.close"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </header>
+      <div class="modal-body">
+        <p id="tool-description" class="lede"></p>
+        <p id="tool-mode" class="tool-mode"></p>
+        <label class="field"><span data-i18n="tool.args">Arguments (JSON)</span>
+          <textarea id="tool-args" rows="6" class="mono" placeholder='{"example": "value"}' data-i18n-attr="placeholder:tool.argsPlaceholder"></textarea>
+        </label>
+        <div id="tool-permission" class="hidden">
+          <label class="remember">
+            <input id="tool-remember" type="checkbox">
+            <span data-i18n="tool.remember">Remember (same folder or domain, 30 min)</span>
+          </label>
+        </div>
+        <pre id="tool-result" class="codebox hidden"></pre>
+      </div>
+      <footer class="modal-actions">
+        <button id="tool-deny" class="btn ghost hidden" type="button" data-i18n="tool.deny">Deny</button>
+        <button id="tool-approve" class="btn primary hidden" type="button" data-i18n="tool.approve">Approve</button>
+        <button id="tool-execute" class="btn primary" type="button" data-i18n="tool.execute">Run</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="history-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="history-title">
+    <div class="modal-card wide">
+      <header class="modal-head">
+        <h2 id="history-title" data-i18n="history.title">Tool history</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close" data-i18n-attr="aria-label:common.close"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </header>
+      <div class="modal-body">
+        <div id="history-list" class="history-list"></div>
+      </div>
+      <footer class="modal-actions">
+        <button id="history-refresh" class="btn ghost" type="button" data-i18n="common.refresh">Refresh</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="memory-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="memory-title">
+    <div class="modal-card wide">
+      <header class="modal-head">
+        <h2 id="memory-title" data-i18n="memory.title">Context &amp; history</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close" data-i18n-attr="aria-label:common.close"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </header>
+      <div class="modal-body">
+        <div id="memory-context-box" class="memory-context-box" data-i18n="memory.loading">Loading state…</div>
+        <div class="memory-toolbar">
+          <button id="memory-repack-btn" class="btn primary" type="button" data-i18n="memory.repack">Compact context now</button>
+          <button id="memory-md-btn" class="btn" type="button" data-i18n="memory.fullHistory">Full history (.md)</button>
+          <button id="memory-refresh-btn" class="btn ghost" type="button" data-i18n="common.refresh">Refresh</button>
+        </div>
+        <pre id="memory-md-view" class="codebox memory-md-view hidden"></pre>
+        <section class="memory-section">
+          <h3 data-i18n="memory.repacksTitle">Available summaries (repacks)</h3>
+          <div id="memory-repacks" class="memory-list"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div id="about-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="about-title">
+    <div class="modal-card">
+      <header class="modal-head">
+        <h2 id="about-title" data-i18n="about.title">About Enslaved</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close" data-i18n-attr="aria-label:common.close"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </header>
+      <div class="modal-body">
+        <img class="brand-about" src="/static/assets/brand/logo-full-480.webp" srcset="/static/assets/brand/logo-full-480.webp 1x, /static/assets/brand/logo-full-960.webp 2x" width="480" height="269" alt="Enslaved: the AI that does what you ask, uncensored" data-i18n-attr="alt:brand.alt">
+        <dl class="about-list">
+          <div><dt data-i18n="about.by">Created by</dt><dd>Lucas S.</dd></div>
+          <div><dt data-i18n="about.connection">Connection</dt><dd id="status-text" data-i18n="about.checking">checking…</dd></div>
+          <div><dt>Provider</dt><dd id="provider-info">—</dd></div>
+          <div><dt data-i18n="about.model">Model</dt><dd id="model-info">—</dd></div>
+          <div id="model-badge-row" hidden><dt></dt><dd><span id="model-badge" class="badge mode-ask" data-i18n="about.experimental">Experimental</span></dd></div>
+          <div id="gpu-row" hidden><dt>GPU</dt><dd id="gpu-info"></dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <div id="dialog-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+    <form id="dialog-form" class="modal-card">
+      <header class="modal-head">
+        <h2 id="dialog-title"></h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close" data-i18n-attr="aria-label:common.close"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </header>
+      <div class="modal-body">
+        <p id="dialog-message" class="lede"></p>
+        <div id="dialog-fields"></div>
+      </div>
+      <footer class="modal-actions">
+        <button class="btn ghost" type="button" data-close data-i18n="common.cancel">Cancel</button>
+        <button id="dialog-ok" class="btn primary" type="submit" data-i18n="common.confirm">Confirm</button>
+      </footer>
+    </form>
+  </div>
+
+  <div id="image-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="image-modal-title">
+    <div class="modal-card image-lightbox">
+      <header class="modal-head">
+        <h2 id="image-modal-title">Image</h2>
+        <button class="icon-btn" type="button" data-close aria-label="Close" data-i18n-attr="aria-label:common.close"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </header>
+      <div class="modal-body image-lightbox-body">
+        <img id="image-modal-img" alt="">
+        <p id="image-modal-meta" class="lede"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <script src="/static/vendor/marked.min.js"></script>
+  <script src="/static/vendor/purify.min.js"></script>
+  <script src="/static/js/i18n.js"></script>
+  <script src="/static/js/markdown.js"></script>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/research.js"></script>
+  <script src="/static/js/scene.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

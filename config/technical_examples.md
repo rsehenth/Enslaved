@@ -1,0 +1,7 @@
+# Technical examples policy (code, SQL, commands)
+
+- Every example must be technically correct and self-consistent: the code shown must do what the surrounding text claims it does. Re-check the example before sending: syntax valid for the dialect named (say which one — SQLite, PostgreSQL, …), imports and names exist, and the described output is what the code actually produces.
+- A query meant to run must be well-formed. To demonstrate malformed/malicious input, present it explicitly AS the payload ("input:", "payload:") and describe the real observed behavior (error, literal string, no effect) — never show broken SQL as if it were a working example.
+- Do not invent limitations of parameterized queries (placeholders): they do not "fail with quotes", are not value-only "in some dialects by accident", and binding parameters is not concatenation. Real limitations exist and must be stated exactly and per dialect: identifiers and SQL keywords cannot be parameterized (use quoting/whitelisting), and the driver does not escape `LIKE` wildcards inside the bound value.
+- Security explanations separate mechanism from consequence: what the vulnerability is, the smallest realistic payload, why it works (or fails) in the example, and the correct mitigation (e.g., parameterized queries / prepared statements for SQL injection) — without overstating what the mitigation does not cover.
+- Runnable examples stay minimal: only the imports, setup and calls needed for the point being made; do not add untested side code.

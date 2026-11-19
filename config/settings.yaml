@@ -1,0 +1,127 @@
+# Configuração do Enslaved (Fase 1).
+# Variáveis de ambiente compatíveis estão listadas em .env.example.
+
+app:
+  name: Enslaved
+  host: 127.0.0.1          # mantenha local; expor em rede exige revisão de segurança
+  port: 8000
+  log_level: info
+
+provider:
+  name: ollama             # ollama | simulated
+  # Modelo padrão: Qwen3.5 9B RANA Q6_K, validado na RTX 3080 Ti (12 GB).
+  # Alternar modelos: use Settings → Modelo na interface (persiste em data/model-selection.json
+  # e pede reinício do backend) ou troque "model" abaixo.
+  model: abliterant/qwen3.5-rana:9b-q6_K
+  models:                  # perfis por modelo; campos ausentes herdam de ollama.*
+    abliterant/qwen3.5-rana:9b-q6_K:
+      num_ctx: 16384            # janela validada na RTX 3080 Ti; modelo suporta até 262144 (/api/show)
+      num_predict: 2048         # respostas técnicas desenvolvidas (antes 1024); não altera VRAM (o consumo escala com num_ctx)
+      temperature: 0.7
+      think: false              # raciocínio desativado por padrão (chip "Raciocínio" liga por mensagem)
+      supports_vision: true     # verificado (/api/show: vision; teste funcional leu texto de imagem)
+      supports_tools: true      # verificado (/api/show: tools; tool_calls emitidas em teste funcional)
+      experimental: false
+      extra_options: {}         # samplers do autor (temp=1/top_k=20/top_p=0.95/presence_penalty=1.5) NÃO aplicados: mantém padrões validados do projeto
+    hf.co/bartowski/Qwen_Qwen3.5-9B-GGUF:Q6_K:
+      num_ctx: 16384            # janela validada (input_budget=14336 com num_predict=2048)
+      num_predict: 2048
+      temperature: 0.7
+      think: false
+      supports_vision: true
+      supports_tools: true      # verificado via /api/show (capabilities: tools, thinking, completion, vision)
+      experimental: false
+
+ollama:
+  base_url: http://127.0.0.1:11434
+  timeout_seconds: 120
+  num_ctx: 16384           # janela real validada na RTX 3080 Ti (12 GB) sem offload de CPU (input_budget=14336)
+  temperature: 0.7
+  num_predict: 2048        # limite de saída por resposta (antes 1024: respostas truncadas em temas técnicos)
+  think: false             # padrão do raciocínio; o chip "Raciocínio" da interface liga/desliga por mensagem. O raciocínio aparece ao vivo, mas não é salvo; consome num_predict (a aplicação soma uma folga automática)
+
+storage:
+  database_path: data/enslaved.db
+
+directives:
+  path: config/directives.md
+
+skills:
+  directories:
+    - skills
+
+tools:
+  enabled: true
+  max_calls_per_request: 5       # guarda contra loops ilimitados de ferramentas
+  tool_timeout_seconds: 20       # tempo máximo por execução de ferramenta
+  permission_wait_seconds: 180   # quanto tempo um pedido de permissão espera o proprietário
+  max_output_chars: 8000         # quanto do resultado de uma ferramenta entra no contexto
+  permission_modes:              # por capacidade: allow (auto) | ask (pede ao proprietário) | deny
+    app.diagnostics: allow
+    text.analyze: allow
+    fs.read: ask
+    net.fetch: ask
+  fs:
+    allowed_roots:               # leitura de arquivos só dentro destas raízes do projeto
+      - data
+      - docs
+      - skills
+      - config
+    max_file_bytes: 524288
+  net:
+    timeout_seconds: 15
+    max_bytes: 1048576
+    max_redirects: 3
+    allowed_ports: [80, 443]     # apenas web pública; endereços internos são bloqueados
+    min_host_interval_seconds: 0.25  # espaçamento entre inspeções (net.inspect) ao mesmo host
+
+memory:
+  enabled: true
+  base_dir: data/memory
+  compact_threshold_ratio: 0.75  # aciona repack antes de saturar o contexto
+  recent_messages_to_keep: 6     # mensagens recentes preservadas literalmente
+  retrieval_max_tokens: 750      # teto de tokens para memórias recuperadas
+  retrieval_max_items: 8
+  max_summary_tokens: 600
+  repack_use_model: false        # false = compactação determinística sem alucinação; true = usa modelo com fallback
+  repack_target_ratio: 0.5       # alvo de ocupação após compactar automaticamente (evita ciclos repetidos)
+  recall_max_tokens: 600         # teto para recuperar assunto anterior encerrado quando retomado
+
+vision:
+  enabled: true
+  max_images_per_message: 4
+  max_image_bytes: 10485760      # 10 MB por imagem (PNG, JPEG ou WebP)
+  max_image_side: 8192
+  max_image_pixels: 25000000     # limite de decodificação (25 MP)
+  max_image_tokens: 2560         # acima disso a cópia enviada ao Ollama é reduzida preservando proporção
+  processing_timeout_seconds: 15.0
+  processing_memory_mb: 1024
+
+chat:
+  presentation_policy: true        # formatting rules sent to the model (edit config/presentation.md); false disables
+  response_policy: true            # response style and freedom policy (edit config/response_policy.md); false disables
+  technical_examples: true         # technical-examples policy (edit config/technical_examples.md), injected only for technical questions
+  verify_facts: true               # verify TIME-SENSITIVE facts via web search when net.fetch is permitted; stable entity
+                                   # questions ("who created X?") are answered from the model's own knowledge
+  search_provider: duckduckgo      # duckduckgo (no key) | brave (requires ENSLAVED_SEARCH_API_KEY in .env)
+
+research:                          # Deep Research. Modos: quick (padrão), deep, extended
+  enabled: true
+  report_block_chars: 9000         # teto do dossiê de evidências enviado ao modelo
+  report_continuations: 2          # retomadas controladas quando o relatório é cortado pelo limite de saída (0 = nunca retomar)
+  deep:
+    max_pages: 8
+    max_requests: 30
+    max_seconds: 120
+    concurrency: 3
+    max_total_bytes: 8388608
+    max_searches: 3
+    report_tokens: 3072            # orçamento de saída do relatório (tokens)
+  extended:
+    max_pages: 25
+    max_requests: 90
+    max_seconds: 360
+    concurrency: 4
+    max_total_bytes: 25165824
+    max_searches: 8
+    report_tokens: 4608
