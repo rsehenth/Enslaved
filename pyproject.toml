@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "enslaved"
 version = "0.2.0"
-description = "Enslaved - plataforma pessoal de IA local (Fase 2A: skills e ferramentas)"
+description = "Local AI assistant on Ollama with a chat dashboard, permissioned tools, web research and an OpenAI-compatible local API"
 requires-python = ">=3.12"
 license = "MIT"
 license-files = ["LICENSE"]
